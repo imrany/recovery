@@ -1,2 +1,17 @@
 recovered
 disk_image
+recovery
+bin
+
+*.exe
+*.test
+*.out
+vendor/
+*.log
+*.tmp
+*.swp
+.idea/
+.vscode/
+.DS_Store
+*.coverprofile
+*.sum
