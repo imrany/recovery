@@ -1,4 +1,7 @@
-This is a recovery tool, it handles **documents, videos, images, audios, and archives**.
+This tool scans disk sectors for deleted files and attempts to recover them based on file signatures.
+
+
+You can specify the type of files to recover using the -type flag.
 
 ### **📍 Multi-Format Recovery Approach**
 ✔ **Identify headers & footers for supported formats**  

@@ -4,7 +4,7 @@ import (
 	// "fyne.io/fyne/v2/app"
 	// "fyne.io/fyne/v2/container"
 	// "fyne.io/fyne/v2/widget"
-	"fmt"
+	"flag"
 	"os"
 	"runtime"
 
@@ -32,7 +32,15 @@ func main() {
 
     // window.ShowAndRun()
 
+	var fileType string
 	var diskPath string
+	var fileInfo string
+
+	flag.StringVar(&fileType, "type", "", "Specify file type to recover (e.g., 'images', 'video', 'pdf', 'all', 'audio', 'documents', 'archives', 'executable', 'text', 'code', 'fonts', 'database', 'email', 'backup'). Default is 'all'.")
+	flag.StringVar(&fileInfo, "info", "", "Display information about the specified file")
+	partitions := flag.Bool("partitions", false, "List partitions")
+	flag.Parse()
+
 	switch {
 		case os.Getenv("WSL_DISTRO_NAME") != "":
 			diskPath = "/mnt/c"
@@ -45,6 +53,7 @@ func main() {
 		default:
 			diskPath = "/dev/sda"
 	}
-	fmt.Println("Scanning disk sectors for deleted files...")
-	disk.Scan(diskPath)
+	disk.ListPartitions(partitions)
+	disk.GetFileMetadata(fileInfo)
+	disk.Scan(diskPath, fileType)
 }
