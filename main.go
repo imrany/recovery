@@ -38,20 +38,23 @@ func main() {
 
 	flag.StringVar(&fileType, "type", "", "Specify file type to recover (e.g., 'images', 'video', 'pdf', 'all', 'audio', 'documents', 'archives', 'executable', 'text', 'code', 'fonts', 'database', 'email', 'backup'). Default is 'all'.")
 	flag.StringVar(&fileInfo, "info", "", "Display information about the specified file")
+	flag.StringVar(&diskPath, "disk", "", "Specify the disk path (e.g., /dev/sda, C:\\, /dev/disk0)")
 	partitions := flag.Bool("partitions", false, "List partitions")
 	flag.Parse()
 
-	switch {
-		case os.Getenv("WSL_DISTRO_NAME") != "":
-			diskPath = "/mnt/c"
-		case os.Getenv("OS") == "Windows_NT":
-			diskPath = "C:\\"
-		case os.Getenv("XDG_SESSION_TYPE") != "":
-			diskPath = "/dev/sda"
-		case runtime.GOOS == "darwin":
-			diskPath = "/dev/disk0"
-		default:
-			diskPath = "/dev/sda"
+	if diskPath == "" {
+		switch {
+			case os.Getenv("WSL_DISTRO_NAME") != "":
+				diskPath = "/mnt/c"
+			case os.Getenv("OS") == "Windows_NT":
+				diskPath = "C:\\"
+			case os.Getenv("XDG_SESSION_TYPE") != "":
+				diskPath = "/dev/sda"
+			case runtime.GOOS == "darwin":
+				diskPath = "/dev/disk0"
+			default:
+				diskPath = "/dev/sda"
+		}
 	}
 	disk.ListPartitions(partitions)
 	disk.GetFileMetadata(fileInfo)

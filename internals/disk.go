@@ -143,7 +143,7 @@ func recoverFile(data []byte, outputPath string) {
         os.Mkdir(destDir, 0755)
     }
 
-    file, err := os.Create(destDir + outputPath)
+    file, err := os.OpenFile(destDir + outputPath, os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0666)
     if err != nil {
         fmt.Println("[-] Failed to save recovered file:", err)
         return
