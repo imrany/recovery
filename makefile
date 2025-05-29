@@ -1,15 +1,20 @@
 all: build
 
+build: build-macos build-linux build-windows
+
 dev: 
 	@echo 'starting dev server'
-    CompileDaemon -build="go build -o ./recovery main.go" -command="./recovery"
+	CompileDaemon -build="go build -o ./recovery main.go" -command="./recovery"
+
+run:
+	@echo 'running recovery...'
+	sudo ./recovery
 
 clean:
 	@echo 'cleaning up...'
 	rm -rf bin
 	rm -f recovery
 	
-build: build-macos build-linux build-windows
 
 build-macos:
 	@echo "Building for macOS..."

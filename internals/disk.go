@@ -1,9 +1,12 @@
 package disk
 
 import (
-    "bytes"
-    "fmt"
-    "os"
+	"bytes"
+	"fmt"
+	"os"
+	"os/exec"
+	"runtime"
+	"syscall"
 )
 
 // File signatures for common types
@@ -115,4 +118,46 @@ func recoverFile(data []byte, outputPath string) {
     } else {
         fmt.Println("[+] Successfully recovered:", outputPath)
     }
+}
+
+// Recover metadata (timestamps, original path)
+func GetFileMetadata(filePath string) {
+    fileInfo, err := os.Stat(filePath)
+    if err != nil {
+        fmt.Println("[-] Error accessing file:", err)
+        return
+    }
+
+    stat := fileInfo.Sys().(*syscall.Stat_t)
+    fmt.Println("[+] Metadata for:", filePath)
+    fmt.Println(" - Size:", fileInfo.Size())
+    fmt.Println(" - Last Modified:", fileInfo.ModTime())
+    fmt.Println(" - Inode:", stat.Ino)
+}
+
+// Function to list partitions
+func ListPartitions() {
+    fmt.Println("Scanning for lost partitions...")
+    var cmd string
+    var args []string
+    switch {
+        case os.Getenv("OS") == "Windows_NT":
+            cmd = "wmic"
+            args = []string{"logicaldisk", "get", "DeviceID,VolumeName,FileSystem,Size,FreeSpace"}
+        case runtime.GOOS == "darwin":
+            cmd = "diskutil"
+            args = []string{"list"}
+        default:
+            cmd = "lsblk"
+            args = []string{"-o", "NAME,SIZE,FSTYPE,MOUNTPOINT"}
+    }
+    
+    execute := exec.Command(cmd, args...)
+    output, err := execute.Output()
+    if err != nil {
+        fmt.Println("[-] Error scanning partitions:", err)
+        return
+    }
+
+    fmt.Println("[+] Detected partitions:\n", string(output))
 }

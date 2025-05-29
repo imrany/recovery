@@ -5,6 +5,8 @@ import (
 	// "fyne.io/fyne/v2/container"
 	// "fyne.io/fyne/v2/widget"
 	"fmt"
+	"os"
+	"runtime"
 
 	disk "github.com/imrany/recovery/internals"
 )
@@ -30,8 +32,19 @@ func main() {
 
     // window.ShowAndRun()
 
-	diskPath := "/dev/sda" // Use the raw disk path (Linux example)
-    fmt.Println("Scanning disk sectors for deleted files...")
-    disk.Scan(diskPath)
-
+	var diskPath string
+	switch {
+		case os.Getenv("WSL_DISTRO_NAME") != "":
+			diskPath = "/mnt/c"
+		case os.Getenv("OS") == "Windows_NT":
+			diskPath = "C:\\"
+		case os.Getenv("XDG_SESSION_TYPE") != "":
+			diskPath = "/dev/sda"
+		case runtime.GOOS == "darwin":
+			diskPath = "/dev/disk0"
+		default:
+			diskPath = "/dev/sda"
+	}
+	fmt.Println("Scanning disk sectors for deleted files...")
+	disk.Scan(diskPath)
 }
