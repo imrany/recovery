@@ -5,7 +5,7 @@ You can specify the type of files to recover using the -type flag.
 
 ---
 
-### **Usage**
+### **🚀 Usage**
 1. To scan and recover specific files `recovery -disk=<diskpath> -type=file_extension` 
 2. To scan and recover all files `recovery -disk=<diskpath> -type=all`
 3. List partitions on a disk `recovery -disk=<diskpath> -partitions`
