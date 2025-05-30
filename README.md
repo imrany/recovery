@@ -3,21 +3,15 @@ This tool scans disk sectors for deleted files and attempts to recover them base
 
 You can specify the type of files to recover using the -type flag.
 
-### **📍 Multi-Format Recovery Approach**
-✔ **Identify headers & footers for supported formats**  
-✔ **Recover entire files instead of fragments**  
-✔ **Ensure correct file extensions upon recovery**  
-✔ **Improve efficiency for large files (videos, archives)**  
-
 ---
 
-### **🚀 Features & Enhancements**
-✔ **Supports full recovery of documents, videos, audios, and archives**  
-✔ **Automatically assigns correct file extensions**  
-✔ **Handles large files like movies, ZIP archives, and ISOs efficiently**  
-✔ **Improves detection accuracy** with precise headers and footers  
+### **Usage**
+1. To scan and recover specific files `recovery -disk=<diskpath> -type=file_extension` 
+2. To scan and recover all files `recovery -disk=<diskpath> -type=all`
+3. List partitions on a disk `recovery -disk=<diskpath> -partitions`
+4. Check a files metadata `recovery -info=file_path` 
 
 ---
 
 ### **🔥 Get your recovered files**
-1️⃣ **Verify recovered files using `./recovered/recovered_<type>.<ext>`**  
+1️⃣ Recovered files would be saved as **`./recovered/recovered_<sector>.<ext>`**  
