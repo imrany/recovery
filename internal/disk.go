@@ -177,9 +177,13 @@ func GetFileMetadata(filePath string) {
 }
 
 // Function to list partitions
-func ListPartitions(partitions *bool) {
-    if *partitions {
-        fmt.Println("Scanning for lost partitions...")
+func ListPartitions(partitions *bool, diskPath string) {
+    if *partitions&&diskPath != "" {
+        fmt.Println("[*] Listing partitions on disk:", diskPath)
+        if _, err := os.Stat(diskPath); os.IsNotExist(err) {
+            fmt.Println("[-] Disk not found:", diskPath)
+            return
+        }
         var cmd string
         var args []string
         switch {

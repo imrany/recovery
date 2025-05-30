@@ -8,7 +8,7 @@ import (
 	"os"
 	"runtime"
 
-	disk "github.com/imrany/recovery/internals"
+	disk "github.com/imrany/recovery/internal"
 )
 
 // GUI for recovery tool
@@ -56,7 +56,7 @@ func main() {
 				diskPath = "/dev/sda"
 		}
 	}
-	disk.ListPartitions(partitions)
+	disk.ListPartitions(partitions, diskPath)
 	disk.GetFileMetadata(fileInfo)
 	disk.Scan(diskPath, fileType)
 }
