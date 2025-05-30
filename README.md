@@ -1,4 +1,4 @@
-# 🛠️ Disk Recovery Tool
+# 🛠️ File Recovery Tool
 
 A simple tool to scan your disk for deleted files and recover them easily.
 
@@ -13,7 +13,7 @@ A simple tool to scan your disk for deleted files and recover them easily.
 
 ## 📖 Overview
 
-**Disk Recovery Tool** helps you restore deleted files from your hard drive or USB stick.  
+**File Recovery Tool** helps you restore deleted files from your hard drive.  
 It scans disk sectors for lost files and recovers them based on file signatures.
 
 - **Who is it for?**  
